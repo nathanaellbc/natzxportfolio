@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from "react"
-import jumpscareVid from "@/assets/jumpscare.mp4"
 
 type LineType = "normal" | "green" | "yellow"
 
@@ -223,7 +222,7 @@ export function BiosScreen({ onDone }: Props) {
         <div className="jumpscare-container">
           <video
             ref={videoRef}
-            src={jumpscareVid}
+            src="https://res.cloudinary.com/dmneddivg/video/upload/v1773862551/jumpscare_y76kj4.mp4"
             autoPlay
             playsInline
             onEnded={handleVideoEnded}

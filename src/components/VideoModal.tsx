@@ -11,6 +11,7 @@ type Phase = "closed" | "expanding" | "pulsing" | "done" | "closing";
 
 export function VideoModal({ isOpen, onClose, videoSrc, videoTitle }: Props) {
   const [phase, setPhase] = useState<Phase>("closed");
+  const isYouTube = videoSrc.includes("youtube.com") || videoSrc.includes("youtu.be");
 
   // Prevent body scroll and handle animation phases
   useEffect(() => {
@@ -81,24 +82,34 @@ export function VideoModal({ isOpen, onClose, videoSrc, videoTitle }: Props) {
             </button>
           </div>
 
-          {/* Window Content */}
-          <div className="flex-1 bg-black flex items-center justify-center">
+          <div className="flex-1 bg-black flex items-center justify-center overflow-hidden">
             {phase === 'done' && (
-              <video
-                src={videoSrc}
-                controls
-                autoPlay
-                className="w-full max-h-[75vh] object-contain outline-none"
-              >
-                Your browser does not support the video tag.
-              </video>
+              isYouTube ? (
+                <iframe
+                  src={videoSrc}
+                  title={videoTitle}
+                  className="w-full h-full min-h-[50vh] max-h-[75vh]"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <video
+                  src={videoSrc}
+                  controls
+                  autoPlay
+                  className="w-full max-h-[75vh] object-contain outline-none"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )
             )}
           </div>
 
           {/* Window Footer */}
           <div className="p-2 border-t border-primary/30 flex justify-between text-[10px] text-muted-foreground font-bold tracking-widest uppercase shrink-0">
-            <span>STATUS: DECRYPTED</span>
-            <span>FORMAT: MPEG-4</span>
+            <span>STATUS: {isYouTube ? "STREAMING" : "DECRYPTED"}</span>
+            <span>FORMAT: {isYouTube ? "YOUTUBE" : "MPEG-4"}</span>
           </div>
         </div>
       </div>

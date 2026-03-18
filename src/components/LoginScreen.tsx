@@ -204,7 +204,7 @@ export function LoginScreen({ onLogin }: Props) {
           minHeight: "26px", textAlign: "center",
         }}>
           {hackPhase === 'hacked' ? (
-            <DecryptText text="natxz." speed={40} maxIterations={4} once />
+            <DecryptText text="natzx." speed={40} maxIterations={4} once />
           ) : (
             <>
               {NAME.slice(0, nameChars)}

@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { PaperModal } from "./PaperModal";
 import { VideoModal } from "./VideoModal";
 import { DecryptText } from "@/components/DecryptText";
-import cvVideo from "@/assets/neurasynth.mp4";
-import mlVideo from "@/assets/diagnosifyit!.mp4";
 
 
 const experiences = [
@@ -185,8 +183,8 @@ export function ExperienceTimeline() {
 
                     onClick={() => {
                       if (exp.id === 1) setIsPaperModalOpen(true);
-                      if (exp.id === 2) setActiveVideo({ src: cvVideo, title: "neurasynth.mp4" });
-                      if (exp.id === 3) setActiveVideo({ src: mlVideo, title: "diagnosifyit!.mp4" });
+                      if (exp.id === 2) setActiveVideo({ src: "https://www.youtube.com/embed/6gsEEg7vH5c", title: "NEURASYNTH_TRAJECTORY" });
+                      if (exp.id === 3) setActiveVideo({ src: "https://www.youtube.com/embed/uzxCEz-PAfQ", title: "DIAGNOSIFYIT_CORE" });
                     }}
                     className={`ctos-panel p-6 w-full relative transition-all duration-500
                       ${[1, 2, 3].includes(exp.id) ? 'liquid-glass border-primary/50 hover:border-primary cursor-pointer hover:bg-white/5 animate-pulse-slow' : 'cursor-crosshair'}
