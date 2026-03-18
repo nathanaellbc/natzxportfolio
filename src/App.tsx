@@ -264,48 +264,49 @@ export default function App() {
             </section>
           </RevealOnScroll>
 
-          {/* ── About Section ──────────────────────────────────────── */}
           <RevealOnScroll>
-            <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-12 border-t border-muted bg-[linear-gradient(rgba(15,100%,50%,0.02)_1px,transparent_1px)] bg-[size:100%_4px]">
-              <div>
-                <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-                  <span className="text-primary animate-pulse">{'//'}</span>
-                  <DecryptText text="ENCRYPTED_PROFILE_DATA" delay={300} speed={25} maxIterations={2} once onComplete={() => setAboutSeq(s => ({ ...s, titleDone: true }))} />
-                </h2>
-              </div>
-
-              <div className="flex flex-col lg:flex-row gap-16 items-center min-h-[300px]">
-                <div className="flex-1 text-muted-foreground leading-relaxed space-y-6 text-lg border-l border-muted pl-6">
-                  <p className="text-secondary font-bold text-sm tracking-widest min-h-[1.5rem]">
-                    {aboutSeq.titleDone && (
-                      <DecryptText
-                        text="> INITIALIZING BACKGROUND SCAN... COMPLETE."
-                        delay={0}
-                        speed={20}
-                        maxIterations={2}
-                        once
-                        onComplete={() => {
-                          setAboutSeq(s => ({ ...s, p1Done: true }))
-                          setTimeout(() => setAboutSeq(s => ({ ...s, p2Done: true })), 600)
-                          setTimeout(() => setAboutSeq(s => ({ ...s, box1Done: true })), 1200)
-                          setTimeout(() => setAboutSeq(s => ({ ...s, box2Done: true })), 1500)
-                          setTimeout(() => setAboutSeq(s => ({ ...s, box3Done: true })), 1800)
-                        }}
-                      />
-                    )}
-                  </p>
-                  <p className={`text-foreground min-h-[6rem] transition-all duration-1000 ${aboutSeq.p1Done ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                    I am a Computer Science student and AI researcher whose work focuses on the intersection of deep learning and predictive healthcare. My journey is defined by engineering intelligent systems—from developing fine-tuned YOLOv11 models for multi-view MRI brain tumor detection to building probabilistic frameworks for diabetes risk classification.
-                  </p>
-                  <p className={`text-foreground min-h-[4rem] transition-all duration-1000 ${aboutSeq.p2Done ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                    I specialize in the end-to-end deployment of machine learning pipelines, leveraging analytical rigor to transform complex clinical datasets into actionable insights.
-                  </p>
+            <section className="border-t border-muted bg-[linear-gradient(rgba(15,100%,50%,0.02)_1px,transparent_1px)] bg-[size:100%_4px] relative z-10">
+              <div className="py-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col gap-12">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
+                    <span className="text-primary animate-pulse">{'//'}</span>
+                    <DecryptText text="ENCRYPTED_PROFILE_DATA" delay={300} speed={25} maxIterations={2} once onComplete={() => setAboutSeq(s => ({ ...s, titleDone: true }))} />
+                  </h2>
                 </div>
 
-                <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
-                  <CountUpBox end={4} label="DEV_LANGUAGES" suffix="+" start={aboutSeq.box1Done} />
-                  <CountUpBox end={10} label="AI_FRAMEWORKS" suffix="+" start={aboutSeq.box2Done} duration={2000} />
-                  <CountUpBox end={3.83} label="SYSTEM_GPA" start={aboutSeq.box3Done} />
+                <div className="flex flex-col lg:flex-row gap-16 items-center min-h-[300px]">
+                  <div className="flex-1 text-muted-foreground leading-relaxed space-y-6 text-lg border-l border-muted pl-6">
+                    <p className="text-secondary font-bold text-sm tracking-widest min-h-[1.5rem]">
+                      {aboutSeq.titleDone && (
+                        <DecryptText
+                          text="> INITIALIZING BACKGROUND SCAN... COMPLETE."
+                          delay={0}
+                          speed={20}
+                          maxIterations={2}
+                          once
+                          onComplete={() => {
+                            setAboutSeq(s => ({ ...s, p1Done: true }))
+                            setTimeout(() => setAboutSeq(s => ({ ...s, p2Done: true })), 600)
+                            setTimeout(() => setAboutSeq(s => ({ ...s, box1Done: true })), 1200)
+                            setTimeout(() => setAboutSeq(s => ({ ...s, box2Done: true })), 1500)
+                            setTimeout(() => setAboutSeq(s => ({ ...s, box3Done: true })), 1800)
+                          }}
+                        />
+                      )}
+                    </p>
+                    <p className={`text-foreground min-h-[6rem] transition-all duration-1000 ${aboutSeq.p1Done ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                      I am a Computer Science student and AI researcher whose work focuses on the intersection of deep learning and predictive healthcare. My journey is defined by engineering intelligent systems—from developing fine-tuned YOLOv11 models for multi-view MRI brain tumor detection to building probabilistic frameworks for diabetes risk classification.
+                    </p>
+                    <p className={`text-foreground min-h-[4rem] transition-all duration-1000 ${aboutSeq.p2Done ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                      I specialize in the end-to-end deployment of machine learning pipelines, leveraging analytical rigor to transform complex clinical datasets into actionable insights.
+                    </p>
+                  </div>
+
+                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+                    <CountUpBox end={4} label="DEV_LANGUAGES" suffix="+" start={aboutSeq.box1Done} />
+                    <CountUpBox end={10} label="AI_FRAMEWORKS" suffix="+" start={aboutSeq.box2Done} duration={2000} />
+                    <CountUpBox end={3.83} label="SYSTEM_GPA" start={aboutSeq.box3Done} />
+                  </div>
                 </div>
               </div>
             </section>
@@ -379,21 +380,22 @@ export default function App() {
 
           {/* ── Contact Section ────────────────────────────────────── */}
           <RevealOnScroll>
-            <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-12 border-t border-muted">
-              <div>
-                <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-                  <span className="text-primary animate-pulse">{'//'}</span>
-                  <DecryptText
-                    text="SECURE_CHANNEL"
-                    delay={300} speed={25} maxIterations={2} once
-                    onComplete={() => {
-                      setContactSeq(s => ({ ...s, titleDone: true }));
-                      setTimeout(() => setContactSeq(s => ({ ...s, leftDone: true })), 400);
-                      setTimeout(() => setContactSeq(s => ({ ...s, rightDone: true })), 800);
-                    }}
-                  />
-                </h2>
-              </div>
+            <section className="border-t border-muted relative z-10 w-full">
+              <div className="py-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col gap-12">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
+                    <span className="text-primary animate-pulse">{'//'}</span>
+                    <DecryptText
+                      text="SECURE_CHANNEL"
+                      delay={300} speed={25} maxIterations={2} once
+                      onComplete={() => {
+                        setContactSeq(s => ({ ...s, titleDone: true }));
+                        setTimeout(() => setContactSeq(s => ({ ...s, leftDone: true })), 400);
+                        setTimeout(() => setContactSeq(s => ({ ...s, rightDone: true })), 800);
+                      }}
+                    />
+                  </h2>
+                </div>
 
               <div className="flex flex-col md:flex-row gap-16">
                 <div className={`flex-1 flex flex-col gap-8 text-muted-foreground leading-relaxed transition-all duration-1000 ease-out ${contactSeq.leftDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -461,8 +463,9 @@ export default function App() {
                   </form>
                 </div>
               </div>
-            </section>
-          </RevealOnScroll>
+            </div>
+          </section>
+        </RevealOnScroll>
 
           {/* ── Footer ─────────────────────────────────────────────── */}
           <footer className="border-t border-primary/30 py-8 px-8 md:px-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center z-10 relative bg-black/80">

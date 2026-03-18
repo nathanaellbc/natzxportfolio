@@ -146,12 +146,12 @@ export function LoginScreen({ onLogin }: Props) {
     >
       {/* ── Clock ─────────────────────────────────────────────────── */}
       <div style={{
-        position: "absolute", top: "24px", left: "50%",
+        position: "absolute", top: "20px", left: "50%",
         transform: "translateX(-50%)", textAlign: "center",
-        color: "rgba(255,255,255,0.5)", fontSize: "13px",
+        color: "rgba(255,255,255,0.5)", fontSize: "11px",
         letterSpacing: "0.04em", lineHeight: 1.6,
       }}>
-        <div style={{ fontSize: "22px", fontWeight: 300, color: "rgba(255,255,255,0.72)" }}>
+        <div style={{ fontSize: "18px", fontWeight: 300, color: "rgba(255,255,255,0.72)" }}>
           {hackPhase === 'normal' ? timeStr : glitchTime}
         </div>
         <div>{hackPhase === 'normal' ? dateStr : glitchDate}</div>
@@ -182,11 +182,11 @@ export function LoginScreen({ onLogin }: Props) {
 
         {/* Avatar */}
         <div style={{
-          width: "92px", height: "92px", borderRadius: "50%",
+          width: "74px", height: "74px", borderRadius: "50%",
           background: "rgba(255,255,255,0.07)",
           border: "2px solid rgba(255,255,255,0.12)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          overflow: "hidden", marginBottom: "16px",
+          overflow: "hidden", marginBottom: "12px",
           transition: "transform 0.25s ease, box-shadow 0.25s ease",
           transform: hovered ? "scale(1.07)" : "scale(1)",
           boxShadow: hovered
@@ -215,7 +215,9 @@ export function LoginScreen({ onLogin }: Props) {
 
         {/* Subtext — typewriter / decrypt */}
         <div style={{
-          fontSize: "11px", letterSpacing: "0.14em",
+          fontSize:     "clamp(10px, 1.2vw, 13px)",
+        padding:      "22px 32px",
+          letterSpacing: "0.14em",
           color: "rgba(255,255,255,0.38)",
           minHeight: "16px", textAlign: "center",
           textTransform: "uppercase",
@@ -236,13 +238,13 @@ export function LoginScreen({ onLogin }: Props) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           style={{
-            marginTop: "20px",
-            minWidth: "160px", padding: "13px 52px",
+            marginTop: "16px",
+            minWidth: "130px", padding: "10px 42px",
             background: hovered ? "rgba(255,255,255,0.13)" : "rgba(255,255,255,0.07)",
             border: "1px solid rgba(255,255,255,0.14)",
             borderRadius: "6px",
             color: "white",
-            fontSize: "13px", fontWeight: 500,
+            fontSize: "11px", fontWeight: 500,
             letterSpacing: "0.24em",
             textTransform: "uppercase",
             cursor: "none",

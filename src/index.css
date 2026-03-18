@@ -26,6 +26,10 @@
   }
 }
 
+html {
+  font-size: 13px;
+}
+
 :root {
   --background: 0 0% 3%;
   --foreground: 0 0% 95%;

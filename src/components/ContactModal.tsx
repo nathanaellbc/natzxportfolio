@@ -366,7 +366,7 @@ export function ContactModal({ isOpen, onClose }: Props) {
 
       <div
         className={`ctos-panel relative z-10 w-full flex flex-col bg-black/95 pointer-events-auto border-primary/30
-          origin-center transition-all duration-400 ease-out h-[90vh]
+          origin-center transition-all duration-400 ease-out h-fit max-h-[95vh] md:h-[90vh]
           ${phase === 'closed' || phase === 'closing' ? 'opacity-0 scale-y-0' : 'opacity-100 scale-y-100'}
           ${isEnlarged ? 'max-w-7xl' : 'max-w-6xl'}
           before:transition-transform before:duration-200 after:transition-transform after:duration-200

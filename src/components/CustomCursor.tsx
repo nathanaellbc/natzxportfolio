@@ -23,7 +23,7 @@ export function CustomCursor() {
     let frameCount = 0
     
     let rafId: number
-    const RING_R  = 18   // half of ring width (36px)
+    const RING_R  = 14   // half of ring width (28px)
     const LERP    = 0.1  // follower speed — lower = more lag
 
     // ── Mouse tracking ────────────────────────────────────────────────
@@ -137,8 +137,8 @@ export function CustomCursor() {
           position:      "fixed",
           top:           "-5px",   // offset so (0,0) of element = centre
           left:          "-5px",
-          width:         "10px",
-          height:        "10px",
+          width:         "8px",
+          height:        "8px",
           background:    "white",
           borderRadius:  "50%",
           pointerEvents: "none",
@@ -154,8 +154,8 @@ export function CustomCursor() {
         className="ring-hovered-base"
         style={{
           position:      "fixed",
-          width:         "36px",
-          height:        "36px",
+          width:         "28px",
+          height:        "28px",
           border:        "none",
           background:    "rgba(255,255,255,0.85)",
           borderRadius:  "50%",

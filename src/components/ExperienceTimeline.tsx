@@ -130,7 +130,7 @@ export function ExperienceTimeline() {
 
 
       {/* Sticky container stays in viewport */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center py-12 px-8 md:px-16 max-w-7xl mx-auto">
+      <div className="sticky top-0 min-h-screen w-full flex flex-col justify-center py-12 md:py-24 px-8 md:px-16 max-w-7xl mx-auto overflow-y-auto md:overflow-visible">
 
         {/* Title */}
         <div
@@ -145,7 +145,7 @@ export function ExperienceTimeline() {
         {/* Timeline Content Wrapper */}
         <div
           ref={timelineRef}
-          className={`relative pl-8 md:pl-0 w-full mt-24 h-[65vh] flex flex-col justify-between transition-opacity duration-500 ${lineVisible ? 'opacity-100' : 'opacity-0'}`}
+          className={`relative pl-8 md:pl-0 w-full mt-24 flex flex-col gap-12 md:gap-8 transition-opacity duration-500 ${lineVisible ? 'opacity-100' : 'opacity-0'}`}
         >
 
           {/* Vertical glowing background line */}
