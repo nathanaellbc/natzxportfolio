@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import bgVideo from "@/assets/bg.mp4";
 
 export function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -57,7 +56,7 @@ export function VideoBackground() {
           playsInline
           className="w-full h-full object-cover opacity-30"
         >
-          <source src={bgVideo} type="video/mp4" />
+          <source src="https://res.cloudinary.com/dmneddivg/video/upload/v1773863606/bg_y22x26.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/60 mix-blend-multiply"></div>
       </div>
