@@ -12,6 +12,8 @@ import { FeedCard } from "@/components/FeedCard";
 import { NotificationToast } from "@/components/NotificationToast";
 import { ContactModal } from "@/components/ContactModal";
 import { useAnimatedFavicon } from './hooks/useAnimatedFavicon';
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { MobileCursor } from "@/components/MobileCursor";
 
 import previewGif from "@/assets/preview.gif";
 import preview2Gif from "@/assets/preview2.gif";
@@ -20,6 +22,7 @@ type Phase = "bios" | "login" | "main"
 
 export default function App() {
   useAnimatedFavicon();
+  const isMobile = useIsMobile();
 
   const [phase, setPhase] = useState<Phase>("bios")
   const [mainVisible, setMainVisible] = useState(false)
@@ -126,7 +129,7 @@ export default function App() {
 
   return (
     <>
-      <CustomCursor />
+      {isMobile ? <MobileCursor /> : <CustomCursor />}
 
       {phase === "bios" && <BiosScreen onDone={() => setPhase("login")} />}
       {phase === "login" && <LoginScreen onLogin={() => setPhase("main")} />}
@@ -140,143 +143,148 @@ export default function App() {
           <div className="scanlines pointer-events-none"></div>
 
           {/* ── Navbar ─────────────────────────────────────────── */}
-          <nav className={`fixed top-0 left-0 right-0 p-6 flex justify-between items-center z-40 bg-black/80 border-b border-primary/30 backdrop-blur-sm transition-transform duration-500 ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
-            <div className="text-primary font-bold tracking-widest text-xl">
-              [SYS.ADMIN_NATHANAEL]
+          <nav className={`fixed top-0 left-0 right-0 p-4 md:p-6 flex justify-between items-center z-40 bg-black/80 border-b border-primary/30 backdrop-blur-sm transition-transform duration-500 ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
+            <div className="text-primary font-bold tracking-widest text-xs md:text-xl truncate mr-2">
+              natzx.
             </div>
 
-            <div className="hidden md:flex gap-4">
-              <button
-                onClick={() => setToggle("AI_OP")}
-                className={`px-5 py-2 border border-primary tracking-widest font-bold transition-all ${toggle === "AI_OP"
-                  ? "bg-primary text-black"
-                  : "bg-transparent text-primary hover:bg-primary/20"
-                  }`}>
-                [ AI_OP ]
-              </button>
-              <button
-                onClick={() => {
-                  setToggle("CRT_OP");
-                  setIsGlobalGlitch(true);
-                  setToast({
-                    isOpen: true,
-                    message: "CRITICAL_ERROR: This module is currently under construction. Access to [ CRT_OP ] is restricted."
-                  });
-                  setTimeout(() => {
-                    setIsGlobalGlitch(false);
-                    setToggle("AI_OP");
-                  }, 1000);
-                }}
-                className={`px-5 py-2 border border-primary tracking-widest font-bold transition-all ${toggle === "CRT_OP"
-                  ? "bg-primary text-black"
-                  : "bg-transparent text-primary hover:bg-primary/20"
-                  }`}>
-                [ CRT_OP ]
-              </button>
-            </div>
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="hidden md:flex gap-4">
+                <button
+                  onClick={() => setToggle("AI_OP")}
+                  className={`px-5 py-2 border border-primary tracking-widest font-bold transition-all ${toggle === "AI_OP"
+                    ? "bg-primary text-black"
+                    : "bg-transparent text-primary hover:bg-primary/20"
+                    }`}>
+                  [ AI_OP ]
+                </button>
+                <button
+                  onClick={() => {
+                    setToggle("CRT_OP");
+                    setIsGlobalGlitch(true);
+                    setToast({
+                      isOpen: true,
+                      message: "CRITICAL_ERROR: This module is currently under construction. Access to [ CRT_OP ] is restricted."
+                    });
+                    setTimeout(() => {
+                      setIsGlobalGlitch(false);
+                      setToggle("AI_OP");
+                    }, 1000);
+                  }}
+                  className={`px-5 py-2 border border-primary tracking-widest font-bold transition-all ${toggle === "CRT_OP"
+                    ? "bg-primary text-black"
+                    : "bg-transparent text-primary hover:bg-primary/20"
+                    }`}>
+                  [ CRT_OP ]
+                </button>
+              </div>
 
-            <div>
-              <button
-                onClick={() => setIsContactModalOpen(true)}
-                className="bg-transparent border border-secondary text-secondary hover:bg-secondary hover:text-black px-6 py-2 tracking-widest font-bold transition-all"
-              >
-                [ INITIATE_CONTACT ]
-              </button>
+              <div>
+                <button
+                  onClick={() => setIsContactModalOpen(true)}
+                  className="bg-transparent border border-secondary text-secondary hover:bg-secondary hover:text-black px-3 py-2 md:px-6 md:py-2 text-xs md:text-base tracking-widest font-bold transition-all whitespace-nowrap"
+                >
+                  [ {isMobile ? "CONTACT" : "INITIATE_CONTACT"} ]
+                </button>
+              </div>
             </div>
           </nav>
 
           {/* ── Hero Section ──────────────────────────────────────── */}
-          <RevealOnScroll>
-            <section className="min-h-screen flex flex-col md:flex-row items-center pt-24 pb-12 px-8 md:px-16 gap-12 z-10 relative max-w-7xl mx-auto">
+          {/* === HERO SECTION === */}
+          <div className="relative min-h-[70vh] md:min-h-screen flex flex-col justify-center items-center overflow-hidden">
+            <RevealOnScroll>
+              <section className="flex flex-col md:flex-row items-center pt-24 pb-12 px-8 md:px-16 gap-12 z-10 relative max-w-7xl mx-auto">
 
-              {/* Left Col */}
-              <div className="flex-1 flex flex-col gap-6">
-                <p className="text-secondary tracking-widest font-bold flex items-center gap-2 min-h-[1.5rem]">
-                  <span className="w-2 h-2 bg-secondary rounded-none animate-pulse shrink-0"></span>
-                  <span>&gt; <DecryptText text="SYSTEM_BOOT_SEQUENCE... OK." delay={300} maxIterations={2} speed={25} /></span>
-                </p>
+                {/* Left Col */}
+                <div className="flex-1 flex flex-col gap-6">
+                  <p className="text-secondary tracking-widest font-bold flex items-center gap-2 min-h-[1.5rem] text-sm md:text-base">
+                    <span className="w-2 h-2 bg-secondary rounded-none animate-pulse shrink-0"></span>
+                    <span>&gt; <DecryptText text="SYSTEM_BOOT_SEQUENCE... OK." delay={300} maxIterations={2} speed={25} /></span>
+                  </p>
 
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.05] text-white">
-                  EXECUTING:<br />
-                  <span className="text-primary">DATA</span>.<br />
-                  <span className="text-secondary">MODELS</span>.<br />
-                  <span className="text-white/80">SYSTEMS</span>.
-                </h1>
+                  <h1 className="text-4xl md:text-7xl font-bold tracking-tighter leading-[1.05] text-white">
+                    EXECUTING:<br />
+                    <span className="text-primary">DATA</span>.<br />
+                    <span className="text-secondary">MODELS</span>.<br />
+                    <span className="text-white/80">SYSTEMS</span>.
+                  </h1>
 
-                <p className="text-muted-foreground text-lg leading-relaxed max-w-xl border-l-[3px] border-primary pl-4">
-                  USER: <span className="text-white font-bold">NATHANAEL B.C.</span> // DIRECTIVE: Bridging analytical depth of AI with visual intuition.
-                </p>
+                  <p className="text-muted-foreground text-sm md:text-lg leading-relaxed max-w-xl border-l-[3px] border-primary pl-4">
+                    USER: <span className="text-white font-bold">NATHANAEL B.C.</span> // DIRECTIVE: Bridging analytical depth of AI with visual intuition.
+                  </p>
 
-                <div className="flex flex-wrap gap-4 mt-6">
-                  <button
-                    onClick={() => {
-                      setIsGlobalGlitch(true);
-                      setTimeout(() => {
-                        document.getElementById('surveillance-feeds')?.scrollIntoView({ behavior: 'auto' });
-                      }, 400);
-                      setTimeout(() => {
-                        setIsGlobalGlitch(false);
-                      }, 1000);
-                    }}
-                    className="bg-primary text-black border border-primary font-bold px-8 py-3 tracking-widest hover:bg-primary/80 transition-all"
-                  >
-                    [ EXPLORE_DATA ]
-                  </button>
-                  <button
-                    onClick={() => setIsResumeOpen(true)}
-                    className="bg-transparent text-secondary border border-secondary font-bold px-8 py-3 tracking-widest hover:bg-secondary hover:text-black transition-all"
-                  >
-                    [ UPLINK_RESUME ]
-                  </button>
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-4 mt-6">
+                    <button
+                      onClick={() => {
+                        setIsGlobalGlitch(true);
+                        setTimeout(() => {
+                          document.getElementById('surveillance-feeds')?.scrollIntoView({ behavior: 'auto' });
+                        }, 400);
+                        setTimeout(() => {
+                          setIsGlobalGlitch(false);
+                        }, 1000);
+                      }}
+                      className="bg-primary text-black border border-primary font-bold px-4 md:px-8 py-2 md:py-3 text-xs md:text-base tracking-widest hover:bg-primary/80 transition-all w-full sm:w-auto"
+                    >
+                      [ EXPLORE_DATA ]
+                    </button>
+                    <button
+                      onClick={() => setIsResumeOpen(true)}
+                      className="bg-transparent text-secondary border border-secondary font-bold px-4 md:px-8 py-2 md:py-3 text-xs md:text-base tracking-widest hover:bg-secondary hover:text-black transition-all w-full sm:w-auto"
+                    >
+                      [ UPLINK_RESUME ]
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              {/* Right Col */}
-              <div className="flex-[0.8] w-full lg:ml-12 xl:ml-20">
-                <div className={`relative group transition-all duration-500
+                {/* Right Col */}
+                <div className="hidden md:block flex-[0.8] w-full lg:ml-12 xl:ml-20">
+                  <div className={`relative group transition-all duration-500
       ${mainVisible ? 'opacity-100 translate-y-0 scale-100 hover:scale-[1.03] hover:z-20 delay-300' : 'opacity-0 translate-y-12 scale-95'}`}
-                >
-                  {/* Main Panel with expanding inner corners on hover */}
-                  <div className={`ctos-panel w-full flex flex-col relative group-hover:bg-secondary/10 transition-colors duration-500
+                  >
+                    {/* Main Panel with expanding inner corners on hover */}
+                    <div className={`ctos-panel w-full flex flex-col relative group-hover:bg-secondary/10 transition-colors duration-500
                     before:transition-transform before:duration-500 group-hover:before:-translate-x-2 group-hover:before:-translate-y-2
                     after:transition-transform after:duration-500 group-hover:after:translate-x-2 group-hover:after:translate-y-2`}
-                  >
-                    <div className="bg-muted px-4 py-2 flex items-center gap-2 border-b border-border/50">
-                      <div className="w-3 h-3 bg-red-500/80 border border-border"></div>
-                      <div className="w-3 h-3 bg-yellow-500/80 border border-border"></div>
-                      <div className="w-3 h-3 bg-green-500/80 border border-border"></div>
-                      <span className="ml-2 text-xs text-muted-foreground tracking-widest font-bold">admin@sys: ~/profile.ts</span>
-                    </div>
-                    <div className="p-6 text-secondary text-sm md:text-base leading-relaxed overflow-x-auto whitespace-pre normal-case">
-                      <span className="text-primary">const</span> professional = {"{"}<br />
-                      &nbsp;&nbsp;name: <span className="text-white">'Nathanael Billy Christiano'</span>,<br />
-                      &nbsp;&nbsp;focus: <span className="text-white">'AI &amp; Data Science Specialist'</span>,<br />
-                      &nbsp;&nbsp;roles: [<span className="text-white">'Machine Learning Engineer', 'Computer Vision Researcher', 'Data Scientist'</span>],<br />
-                      &nbsp;&nbsp;major: <span className="text-white">'Computer Science'</span>,<br />
-                      &nbsp;&nbsp;motto: <span className="text-primary">"Decrypting Complexity, Engineering Intelligence."</span><br />
-                      {"}"};<br />
-                      <br />
-                      professional.<span className="text-white">execute</span>();<span className="animate-pulse bg-secondary text-secondary">_</span>
+                    >
+                      <div className="bg-muted px-4 py-2 flex items-center gap-2 border-b border-border/50">
+                        <div className="w-3 h-3 bg-red-500/80 border border-border"></div>
+                        <div className="w-3 h-3 bg-yellow-500/80 border border-border"></div>
+                        <div className="w-3 h-3 bg-green-500/80 border border-border"></div>
+                        <span className="ml-2 text-xs text-muted-foreground tracking-widest font-bold">admin@sys: ~/profile.ts</span>
+                      </div>
+                      <div className="p-4 md:p-6 text-secondary text-xs sm:text-sm md:text-base leading-relaxed overflow-x-auto whitespace-pre normal-case">
+                        <span className="text-primary">const</span> professional = {"{"}<br />
+                        &nbsp;&nbsp;name: <span className="text-white">'Nathanael Billy Christiano'</span>,<br />
+                        &nbsp;&nbsp;focus: <span className="text-white">'AI &amp; Data Science Specialist'</span>,<br />
+                        &nbsp;&nbsp;roles: [<span className="text-white">'Machine Learning Engineer', 'Computer Vision Researcher', 'Data Scientist'</span>],<br />
+                        &nbsp;&nbsp;major: <span className="text-white">'Computer Science'</span>,<br />
+                        &nbsp;&nbsp;motto: <span className="text-primary">"Decrypting Complexity, Engineering Intelligence."</span><br />
+                        {"}"};<br />
+                        <br />
+                        professional.<span className="text-white">execute</span>();<span className="animate-pulse bg-secondary text-secondary">_</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
-          </RevealOnScroll>
+              </section>
+            </RevealOnScroll>
+          </div>
 
           <RevealOnScroll>
-            <section className="border-t border-muted bg-[linear-gradient(rgba(15,100%,50%,0.02)_1px,transparent_1px)] bg-[size:100%_4px] relative z-10">
-              <div className="py-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col gap-12">
+            <section className="border-t border-muted bg-[linear-gradient(rgba(15,100%,50%,0.02)_1px,transparent_1px)] bg-[size:100%_4px] relative z-10 w-full overflow-hidden">
+              <div className="py-24 px-6 md:px-16 max-w-7xl mx-auto flex flex-col gap-8 md:gap-12">
                 <div>
-                  <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-                    <span className="text-primary animate-pulse">{'//'}</span>
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-widest text-white flex items-center gap-2 md:gap-4 overflow-hidden">
+                    <span className="text-primary animate-pulse shrink-0">{'//'}</span>
                     <DecryptText text="ENCRYPTED_PROFILE_DATA" delay={300} speed={25} maxIterations={2} once onComplete={() => setAboutSeq(s => ({ ...s, titleDone: true }))} />
                   </h2>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-16 items-center min-h-[300px]">
-                  <div className="flex-1 text-muted-foreground leading-relaxed space-y-6 text-lg border-l border-muted pl-6">
-                    <p className="text-secondary font-bold text-sm tracking-widest min-h-[1.5rem]">
+                <div className="flex flex-col xl:flex-row gap-12 xl:gap-16 items-start xl:items-center min-h-[300px]">
+                  <div className="flex-1 text-muted-foreground leading-relaxed space-y-6 text-base md:text-lg border-l border-muted pl-4 md:pl-6">
+                    <p className="text-secondary font-bold text-xs md:text-sm tracking-widest min-h-[1.5rem]">
                       {aboutSeq.titleDone && (
                         <DecryptText
                           text="> INITIALIZING BACKGROUND SCAN... COMPLETE."
@@ -335,10 +343,10 @@ export default function App() {
 
           {/* ── Projects Grid ──────────────────────────────────────── */}
           <RevealOnScroll>
-            <section id="surveillance-feeds" className="py-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-12">
+            <section id="surveillance-feeds" className="py-16 md:py-24 px-6 md:px-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-8 md:gap-12 overflow-hidden">
               <div>
-                <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-                  <span className="text-primary animate-pulse">{'//'}</span>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-widest text-white flex items-center gap-2 md:gap-4 overflow-hidden">
+                  <span className="text-primary animate-pulse shrink-0">{'//'}</span>
                   <DecryptText
                     text="SURVEILLANCE_FEEDS"
                     delay={300} speed={25} maxIterations={2} once
@@ -380,11 +388,11 @@ export default function App() {
 
           {/* ── Contact Section ────────────────────────────────────── */}
           <RevealOnScroll>
-            <section className="border-t border-muted relative z-10 w-full">
-              <div className="py-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col gap-12">
+            <section className="border-t border-muted relative z-10 w-full overflow-hidden">
+              <div className="py-16 md:py-24 px-6 md:px-16 max-w-7xl mx-auto flex flex-col gap-8 md:gap-12">
                 <div>
-                  <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-                    <span className="text-primary animate-pulse">{'//'}</span>
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-widest text-white flex items-center gap-2 md:gap-4 overflow-hidden">
+                    <span className="text-primary animate-pulse shrink-0">{'//'}</span>
                     <DecryptText
                       text="SECURE_CHANNEL"
                       delay={300} speed={25} maxIterations={2} once
@@ -397,82 +405,82 @@ export default function App() {
                   </h2>
                 </div>
 
-              <div className="flex flex-col md:flex-row gap-16">
-                <div className={`flex-1 flex flex-col gap-8 text-muted-foreground leading-relaxed transition-all duration-1000 ease-out ${contactSeq.leftDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <p className="text-white font-bold text-xl tracking-widest border-l-4 border-primary pl-4 py-1">
-                    UPLINK AVAILABLE FOR FREELANCE &amp; CONTRACT DEPLOYMENTS.
-                  </p>
-                  <div className="space-y-2">
-                    <p>&gt; Working on AI, automation, or anything data-heavy?</p>
-                    <p>&gt; Trying to make your systems faster, smarter, or actually usable?</p>
-                    <p>&gt; I’m down to build, just hit me up.</p>
+                <div className="flex flex-col md:flex-row gap-12 md:gap-16">
+                  <div className={`flex-1 flex flex-col gap-6 md:gap-8 text-muted-foreground leading-relaxed transition-all duration-1000 ease-out ${contactSeq.leftDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <p className="text-white font-bold text-lg md:text-xl tracking-widest border-l-4 border-primary pl-4 py-1">
+                      UPLINK AVAILABLE FOR FREELANCE &amp; CONTRACT DEPLOYMENTS.
+                    </p>
+                    <div className="space-y-3 md:space-y-2 text-sm md:text-base">
+                      <p>&gt; Working on AI, automation, or anything data-heavy?</p>
+                      <p>&gt; Trying to make your systems faster, smarter, or actually usable?</p>
+                      <p>&gt; I’m down to build, just hit me up.</p>
+                    </div>
+                    <div className="mt-2 md:mt-4 flex flex-col gap-3 font-mono text-xs md:text-sm bg-black/50 p-4 md:p-6 border border-border/50 overflow-x-auto">
+                      <div className="flex items-center gap-2 md:gap-4 min-w-max">
+                        <span className="text-secondary w-16 md:w-20 font-bold">EMAIL_</span>
+                        <span className="text-white tracking-widest">nathanaelbilly.c@gmail.com</span>
+                      </div>
+                      <div className="flex items-center gap-2 md:gap-4 min-w-max">
+                        <span className="text-secondary w-16 md:w-20 font-bold">LOC_</span>
+                        <span className="text-white tracking-widest">JAKARTA, ID // REMOTE</span>
+                      </div>
+                      <div className="flex items-center gap-2 md:gap-4 min-w-max">
+                        <span className="text-secondary w-16 md:w-20 font-bold">STATUS_</span>
+                        <span className="text-primary tracking-widest animate-pulse">ONLINE</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mt-4 flex flex-col gap-3 font-mono text-sm bg-black/50 p-6 border border-border/50">
-                    <div className="flex items-center gap-4">
-                      <span className="text-secondary w-20 font-bold">EMAIL_</span>
-                      <span className="text-white tracking-widest">nathanaelbilly.c@gmail.com</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-secondary w-20 font-bold">LOC_</span>
-                      <span className="text-white tracking-widest">JAKARTA, ID // REMOTE</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-secondary w-20 font-bold">STATUS_</span>
-                      <span className="text-primary tracking-widest animate-pulse">ONLINE</span>
-                    </div>
+
+                  <div className={`flex-1 transition-all duration-1000 ease-out delay-200 ${contactSeq.rightDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <form className="ctos-panel p-8 flex flex-col gap-8" onSubmit={handleTransmission}>
+
+                      {/* Input Wrapper 1 */}
+                      <div className="relative group p-1">
+                        <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
+                          <label className="text-xs uppercase tracking-widest text-secondary font-bold">IDENTIFICATION [NAME]</label>
+                          <input name="name" type="text" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors" placeholder="GUEST_USER" required />
+                        </div>
+                      </div>
+
+                      {/* Input Wrapper 2 */}
+                      <div className="relative group p-1">
+                        <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
+                          <label className="text-xs uppercase tracking-widest text-secondary font-bold">NETWORK_ADDR [EMAIL]</label>
+                          <input name="email" type="email" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors" placeholder="guest@network.local" required />
+                        </div>
+                      </div>
+
+                      {/* Input Wrapper 3 */}
+                      <div className="relative group p-1">
+                        <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
+                          <label className="text-xs uppercase tracking-widest text-secondary font-bold">DATA_PAYLOAD [MESSAGE]</label>
+                          <textarea name="message" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors min-h-[120px] resize-none" placeholder="Enter transmission..." required spellCheck="false" />
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={transmissionStatus === 'transmitting'}
+                        className={`bg-primary hover:bg-white text-black font-bold tracking-widest py-4 mt-2 transition-colors disabled:bg-primary/50 disabled:cursor-not-allowed`}
+                      >
+                        {transmissionStatus === 'idle' && '[ TRANSMIT_DATA ]'}
+                        {transmissionStatus === 'transmitting' && '[ TRANSMITTING... ]'}
+                        {transmissionStatus === 'sent' && '[ DATA_SENT ]'}
+                        {transmissionStatus === 'error' && '[ RETRY_TRANSMISSION ]'}
+                      </button>
+                    </form>
                   </div>
-                </div>
-
-                <div className={`flex-1 transition-all duration-1000 ease-out delay-200 ${contactSeq.rightDone ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <form className="ctos-panel p-8 flex flex-col gap-8" onSubmit={handleTransmission}>
-
-                    {/* Input Wrapper 1 */}
-                    <div className="relative group p-1">
-                      <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
-                        <label className="text-xs uppercase tracking-widest text-secondary font-bold">IDENTIFICATION [NAME]</label>
-                        <input name="name" type="text" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors" placeholder="GUEST_USER" required />
-                      </div>
-                    </div>
-
-                    {/* Input Wrapper 2 */}
-                    <div className="relative group p-1">
-                      <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
-                        <label className="text-xs uppercase tracking-widest text-secondary font-bold">NETWORK_ADDR [EMAIL]</label>
-                        <input name="email" type="email" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors" placeholder="guest@network.local" required />
-                      </div>
-                    </div>
-
-                    {/* Input Wrapper 3 */}
-                    <div className="relative group p-1">
-                      <div className="ctos-panel w-full flex flex-col gap-2 p-3 transition-colors duration-300 before:transition-transform before:duration-300 after:transition-transform after:duration-300 group-hover:before:-translate-x-1 group-hover:before:-translate-y-1 group-hover:after:translate-x-1 group-hover:after:translate-y-1 group-focus-within:before:-translate-x-1 group-focus-within:before:-translate-y-1 group-focus-within:after:translate-x-1 group-focus-within:after:translate-y-1 group-focus-within:bg-secondary/5">
-                        <label className="text-xs uppercase tracking-widest text-secondary font-bold">DATA_PAYLOAD [MESSAGE]</label>
-                        <textarea name="message" className="bg-transparent border-b-2 border-primary/30 focus:border-secondary outline-none text-white py-2 font-mono transition-colors min-h-[120px] resize-none" placeholder="Enter transmission..." required spellCheck="false" />
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={transmissionStatus === 'transmitting'}
-                      className={`bg-primary hover:bg-white text-black font-bold tracking-widest py-4 mt-2 transition-colors disabled:bg-primary/50 disabled:cursor-not-allowed`}
-                    >
-                      {transmissionStatus === 'idle' && '[ TRANSMIT_DATA ]'}
-                      {transmissionStatus === 'transmitting' && '[ TRANSMITTING... ]'}
-                      {transmissionStatus === 'sent' && '[ DATA_SENT ]'}
-                      {transmissionStatus === 'error' && '[ RETRY_TRANSMISSION ]'}
-                    </button>
-                  </form>
                 </div>
               </div>
-            </div>
-          </section>
-        </RevealOnScroll>
+            </section>
+          </RevealOnScroll>
 
           {/* ── Footer ─────────────────────────────────────────────── */}
-          <footer className="border-t border-primary/30 py-8 px-8 md:px-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center z-10 relative bg-black/80">
-            <div className="text-primary font-bold tracking-widest">
-              [SYS.ADMIN_NATHANAEL]
+          <footer className="border-t border-primary/30 py-6 md:py-8 px-6 md:px-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 z-10 relative bg-black/80">
+            <div className="text-primary font-bold tracking-widest text-sm md:text-base">
+              natzx.
             </div>
-            <div className="text-muted-foreground text-xs tracking-widest mt-4 md:mt-0 uppercase">
+            <div className="text-muted-foreground text-[10px] sm:text-xs tracking-widest uppercase">
               © 2026. ALL RIGHTS RESERVED. // END_OF_FILE.
             </div>
           </footer>

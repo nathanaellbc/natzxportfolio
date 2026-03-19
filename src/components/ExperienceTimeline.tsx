@@ -130,14 +130,14 @@ export function ExperienceTimeline() {
 
 
       {/* Sticky container stays in viewport */}
-      <div className="sticky top-0 min-h-screen w-full flex flex-col justify-center py-12 md:py-24 px-8 md:px-16 max-w-7xl mx-auto overflow-y-auto md:overflow-visible">
+      <div className="sticky top-0 min-h-screen w-full flex flex-col justify-center py-12 md:py-24 px-6 md:px-16 max-w-7xl mx-auto overflow-y-auto md:overflow-visible">
 
         {/* Title */}
         <div
-          className={`absolute top-12 md:top-24 left-8 md:left-16 z-20 transition-opacity duration-500 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute top-12 md:top-24 left-6 md:left-16 z-20 transition-opacity duration-500 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}
         >
-          <h2 className="text-3xl font-bold tracking-widest text-white flex items-center gap-4">
-            <span className="text-primary animate-pulse">{'//'}</span>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-widest text-white flex items-center gap-2 md:gap-4 overflow-hidden">
+            <span className="text-primary animate-pulse shrink-0">{'//'}</span>
             <DecryptText text="OPERATION_TIMELINE" delay={300} speed={25} maxIterations={2} once />
           </h2>
         </div>
@@ -145,15 +145,15 @@ export function ExperienceTimeline() {
         {/* Timeline Content Wrapper */}
         <div
           ref={timelineRef}
-          className={`relative pl-8 md:pl-0 w-full mt-24 flex flex-col gap-12 md:gap-8 transition-opacity duration-500 ${lineVisible ? 'opacity-100' : 'opacity-0'}`}
+          className={`relative pl-10 md:pl-0 w-full mt-24 flex flex-col gap-12 md:gap-8 transition-opacity duration-500 ${lineVisible ? 'opacity-100' : 'opacity-0'}`}
         >
 
           {/* Vertical glowing background line */}
-          <div className="absolute left-[27px] md:left-1/2 top-0 bottom-0 w-[2px] bg-primary opacity-30 transform md:-translate-x-1/2"></div>
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-primary opacity-30 transform -translate-x-1/2"></div>
 
           {/* Animated Fill line (White) */}
           <div
-            className="absolute left-[27px] md:left-1/2 w-[2px] bg-white transform md:-translate-x-1/2 origin-top z-0 rounded-full"
+            className="absolute left-4 md:left-1/2 w-[2px] bg-white transform -translate-x-1/2 origin-top z-0 rounded-full"
             style={{
               top: `${startHeight}%`,
               height: `${lineVisible ? Math.max(0, currentHeight - startHeight) : 0}%`,
@@ -172,8 +172,8 @@ export function ExperienceTimeline() {
                 {/* Node Diamond Dot */}
                 <div
                   ref={el => { dotRefs.current[i] = el; }}
-                  className={`absolute left-[-10px] md:left-1/2 md:-translate-x-1/2 w-4 h-4 border-2 z-10 rotate-45 transition-all duration-300
-                    ${isActive ? ([1, 2, 3].includes(exp.id) ? 'bg-primary border-primary shadow-[0_0_20px_rgba(255,255,255,0.9)] animate-pulse scale-150' : 'bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.8)] scale-125') : 'bg-black border-primary scale-100'}
+                  className={`absolute -left-6 md:left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 border-2 z-10 rotate-45 transition-all duration-300
+                    ${isActive ? ([1, 2, 3].includes(exp.id) ? 'bg-primary border-primary shadow-[0_0_20px_rgba(255,255,255,0.9)] animate-pulse scale-100 md:scale-150' : 'bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.8)] scale-95 md:scale-125') : 'bg-black border-primary scale-75 md:scale-100'}
                   `}
                 ></div>
 
@@ -198,7 +198,7 @@ export function ExperienceTimeline() {
 
                       {/* Hover Tooltip - Animated Line + Text pointing OUTWARDS */}
                       {[1, 2, 3].includes(exp.id) && (
-                        <div className={`absolute -top-12 z-50 pointer-events-none flex items-start ${i % 2 === 0 ? '-right-4 md:-right-24 flex-row' : '-left-4 md:-left-24 flex-row-reverse'}`}>
+                        <div className={`absolute -top-12 z-50 pointer-events-none hidden md:flex items-start ${i % 2 === 0 ? '-right-4 md:-right-24 flex-row' : '-left-4 md:-left-24 flex-row-reverse'}`}>
                           {/* Diagonal section (32x32px) */}
                           <div className="relative w-8 h-8 mt-[15px] shrink-0">
                             {/* Small Box */}

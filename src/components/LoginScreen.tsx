@@ -173,9 +173,9 @@ export function LoginScreen({ onLogin }: Props) {
           }}>
             {/* Simple reproduction of layout for ghosting */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-              <div style={{ width: "92px", height: "92px", borderRadius: "50%", background: "rgba(255,255,255,0.2)", marginBottom: "16px" }} />
-              <div style={{ width: "200px", height: "20px", background: "white", opacity: 0.5 }} />
-              <div style={{ width: "150px", height: "10px", background: "white", opacity: 0.3 }} />
+              <div style={{ width: "78px", height: "78px", borderRadius: "50%", background: "rgba(255,255,255,0.2)", marginBottom: "12px" }} />
+              <div style={{ width: "180px", height: "26px", background: "white", opacity: 0.5 }} />
+              <div style={{ width: "120px", height: "16px", background: "white", opacity: 0.3, marginTop: "-8px", marginBottom: "8px" }} />
             </div>
           </div>
         ))}
@@ -199,7 +199,7 @@ export function LoginScreen({ onLogin }: Props) {
 
         {/* Name — typewriter / decrypt */}
         <div style={{
-          fontSize: "17px", fontWeight: 700,
+          fontSize: "18px", fontWeight: 700,
           letterSpacing: "0.16em", color: "white",
           minHeight: "26px", textAlign: "center",
         }}>
@@ -215,8 +215,10 @@ export function LoginScreen({ onLogin }: Props) {
 
         {/* Subtext — typewriter / decrypt */}
         <div style={{
-          fontSize:     "clamp(10px, 1.2vw, 13px)",
-        padding:      "22px 32px",
+          fontSize: "11px",
+          padding: "0 32px",
+          marginTop: "-8px",
+          marginBottom: "8px",
           letterSpacing: "0.14em",
           color: "rgba(255,255,255,0.38)",
           minHeight: "16px", textAlign: "center",

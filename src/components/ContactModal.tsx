@@ -441,7 +441,7 @@ export function ContactModal({ isOpen, onClose }: Props) {
                     e.stopPropagation();
                     setIsMagnifierEnabled(!isMagnifierEnabled);
                   }}
-                  className={`bg-black/80 border text-[10px] px-3 py-2 font-bold tracking-widest transition-all flex items-center gap-2 pointer-events-auto
+                  className={`hidden md:flex bg-black/80 border text-[10px] px-3 py-2 font-bold tracking-widest transition-all items-center gap-2 pointer-events-auto
                     ${isMagnifierEnabled ? 'border-primary bg-primary text-black' : 'border-primary/50 text-primary hover:bg-primary/20'}
                   `}
                 >
@@ -449,7 +449,7 @@ export function ContactModal({ isOpen, onClose }: Props) {
                   MAGNIFIER: {isMagnifierEnabled ? '[ ON ]' : '[ OFF ]'}
                 </button>
 
-                <div className="bg-black/80 border border-primary/50 text-primary p-2 px-4 backdrop-blur-md font-mono text-[10px] font-bold tracking-[0.2em] pointer-events-none">
+                <div className="hidden md:block bg-black/80 border border-primary/50 text-primary p-2 px-4 backdrop-blur-md font-mono text-[10px] font-bold tracking-[0.2em] pointer-events-none">
                   LENS_FACTOR: {docScale.toFixed(2)}x
                 </div>
 
@@ -470,7 +470,7 @@ export function ContactModal({ isOpen, onClose }: Props) {
 
             {/* Right: Profile Summary */}
             <div className={`transition-all duration-700 ease-in-out bg-gradient-to-br from-black to-primary/5 overflow-hidden
-              ${isEnlarged ? 'flex-[0.0001] opacity-0 pointer-events-none' : 'flex-1 p-6 md:p-8 opacity-100'}
+              ${isEnlarged ? 'flex-[0.0001] opacity-0 pointer-events-none !h-0 !min-h-0 md:!h-auto md:!min-h-auto' : 'flex-1 p-6 md:p-8 opacity-100'}
             `}>
               <div className="min-w-[300px] h-full overflow-y-auto custom-scrollbar space-y-8">
                 <section className="space-y-4">
